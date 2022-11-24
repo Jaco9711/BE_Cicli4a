@@ -16,12 +16,12 @@ class ResultController():
         return self.RepositoryResult.findAll()
 
     def create(self, infoResult, id_Table, id_Aspirant):
-        nuevoResult = Result(infoResult)
-        laTable = Table(self.RepositoryTable.findById(id_Table))
-        elAspirant = Aspirant(self.RepositoryAspirant.findById(id_Aspirant))
-        nuevoResult.Table = laTable
-        nuevoResult.Aspirant = elAspirant
-        return self.RepositoryResult.save(nuevoResult)
+        newtheAspirantResult = Result(infoResult)
+        theTable = Table(self.RepositoryTable.findById(id_Table))
+        theAspirant = Aspirant(self.RepositoryAspirant.findById(id_Aspirant))
+        newtheAspirantResult.Table = theTable
+        newtheAspirantResult.Aspirant = theAspirant
+        return self.RepositoryResult.save(newtheAspirantResult)
 
     def show(self, id):
         elResult = Result(self.RepositoryResult.findById(id))
@@ -29,20 +29,20 @@ class ResultController():
 
     def update(self, id, infoResult, id_Table, id_Aspirant):
         elResult = Result(self.RepositoryResult.findById(id))
-        laTable = Table(self.RepositoryTable.findById(id_Table))
-        elAspirant = Aspirant(self.RepositoryAspirant.findById(id_Aspirant))
-        elResult.Table = laTable
-        elResult.Aspirant = elAspirant
+        theTable = Table(self.RepositoryTable.findById(id_Table))
+        theAspirant = Aspirant(self.RepositoryAspirant.findById(id_Aspirant))
+        elResult.Table = theTable
+        elResult.Aspirant = theAspirant
         return self.RepositoryResult.save(elResult)
 
     def delete(self, id):
         return self.RepositoryResult.delete(id)
 
     def getListarAspirantsTable(self, id_Table):
-        return self.RepositoryResult.getListadoAspirantsInscritosTable(id_Table)
+        return self.RepositoryResult.getListAspirantsinscribedTable(id_Table)
 
-    def getListarTablesDeInscritoAspirant(self, id_Aspirant):
-        return self.RepositoryResult.getListadoTablesAspirantInscrito(id_Aspirant)
+    def getListarTablesDesignedAspirant(self, id_Aspirant):
+        return self.RepositoryResult.getListTablesAspirantsigned(id_Aspirant)
 
     def getMayorCedula(self):
         return self.RepositoryResult.getNumeroCedulaMayorAspirant()

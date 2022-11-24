@@ -10,18 +10,18 @@ class PartyController():
         return self.RepositoryParty.findAll()
     
     def create(self, infoParty):
-        nuevoParty = Party(infoParty)
-        return self.RepositoryParty.save(nuevoParty)
+        newtheAspirantParty = Party(infoParty)
+        return self.RepositoryParty.save(newtheAspirantParty)
     
     def show(self, id):
         elParty = Party(self.RepositoryParty.findById(id))
         return elParty.__dict__
     
     def update(self, id, infoParty):
-        PartyActual = Party(self.RepositoryParty.findById(id))
-        PartyActual.nombre = infoParty["nombre"]
-        PartyActual.lema = infoParty["lema"]
-        return self.RepositoryParty.save(PartyActual)
+        PartyCurrent = Party(self.RepositoryParty.findById(id))
+        PartyCurrent.nombre = infoParty["nombre"]
+        PartyCurrent.lema = infoParty["lema"]
+        return self.RepositoryParty.save(PartyCurrent)
     
     def delete(self, id):
         return self.RepositoryParty.delete(id)

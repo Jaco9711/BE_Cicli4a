@@ -12,26 +12,26 @@ class AspirantController():
         return self.RepositoryAspirant.findAll()
 
     def create(self, infoAspirant):
-        nuevoAspirant = Aspirant(infoAspirant)
-        return self.RepositoryAspirant.save(nuevoAspirant)
+        newtheAspirantAspirant = Aspirant(infoAspirant)
+        return self.RepositoryAspirant.save(newtheAspirantAspirant)
     def show(self, id):
-        elAspirant = Aspirant(self.RepositoryAspirant.findById(id))
-        return elAspirant.__dict__
+        theAspirant = Aspirant(self.RepositoryAspirant.findById(id))
+        return theAspirant.__dict__
 
     def update(self, id, infoAspirant):
-        elAspirant = Aspirant(self.RepositoryAspirant.findById(id))
-        elAspirant.cedula = infoAspirant["cedula"]
-        elAspirant.numero_resolucion = infoAspirant["numero_resolucion"]
-        elAspirant.nombre = infoAspirant["nombre"]
-        elAspirant.apellido = infoAspirant["apellido"]
-        return self.RepositoryAspirant.save(elAspirant)
+        theAspirant = Aspirant(self.RepositoryAspirant.findById(id))
+        theAspirant.cedula = infoAspirant["cedula"]
+        theAspirant.numero_resolucion = infoAspirant["numero_resolucion"]
+        theAspirant.nombre = infoAspirant["nombre"]
+        theAspirant.apellido = infoAspirant["apellido"]
+        return self.RepositoryAspirant.save(theAspirant)
 
     def delete(self, id):
         return self.RepositoryAspirant.delete(id)
     
-    def asignarAspirant(self, id, id_Party):
-        AspirantActual = Aspirant(self.RepositoryAspirant.findById(id))
-        PartyActual = Party(self.RepositoryParty.findById(id_Party))
-        AspirantActual.Party = PartyActual
-        return self.RepositoryAspirant.save(AspirantActual)
+    def assingAspirant(self, id, id_Party):
+        AspirantCurrent = Aspirant(self.RepositoryAspirant.findById(id))
+        PartyCurrent = Party(self.RepositoryParty.findById(id_Party))
+        AspirantCurrent.Party = PartyCurrent
+        return self.RepositoryAspirant.save(AspirantCurrent)
 

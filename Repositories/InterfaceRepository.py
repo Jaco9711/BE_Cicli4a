@@ -16,9 +16,9 @@ class InterfaceRepository(Generic[T]):
     
     def getValuesDBRefFromList(self, theList):
         newList = []
-        laColeccion = self.db[theList[0]._id.collection]
+        theCollection = self.db[theList[0]._id.collection]
         for item in theList:
-            value = laColeccion.find_one({"_id": ObjectId(item.id)})
+            value = theCollection.find_one({"_id": ObjectId(item.id)})
             value["_id"] = value["_id"].__str__()
             newList.append(value)
         return newList
@@ -27,8 +27,8 @@ class InterfaceRepository(Generic[T]):
         keys = x.keys()
         for k in keys:
             if isinstance(x[k], DBRef):
-                laColeccion = self.db[x[k].collection]
-                valor = laColeccion.find_one({"_id": ObjectId(x[k].id)})
+                theCollection = self.db[x[k].collection]
+                valor = theCollection.find_one({"_id": ObjectId(x[k].id)})
                 valor["_id"] = valor["_id"].__str__()
                 x[k] = valor
                 x[k] = self.getValuesDBRef(x[k])
@@ -39,8 +39,8 @@ class InterfaceRepository(Generic[T]):
         return x
    
     def findById(self, id):
-        laColeccion = self.db[self.collection]
-        x = laColeccion.find_one({"_id": ObjectId(id)})
+        theCollection = self.db[self.collection]
+        x = theCollection.find_one({"_id": ObjectId(id)})
         x = self.getValuesDBRef(x)
         if x == None:
             x = {}
@@ -68,9 +68,9 @@ class InterfaceRepository(Generic[T]):
         return x
   
     def findAll(self):
-        laColeccion = self.db[self.collection]
+        theCollection = self.db[self.collection]
         data = []
-        for x in laColeccion.find():
+        for x in theCollection.find():
             x["_id"] = x["_id"].__str__()
             x = self.transformObjectIds(x)
             x = self.getValuesDBRef(x)
@@ -79,16 +79,16 @@ class InterfaceRepository(Generic[T]):
    
     def update(self, id, item: T):
         _id = ObjectId(id)
-        laColeccion = self.db[self.collection]
+        theCollection = self.db[self.collection]
         delattr(item, "_id")
         item = item.__dict__
         updateItem = {"$set": item}
-        x = laColeccion.update_one({"_id":_id}, updateItem)
+        x = theCollection.update_one({"_id":_id}, updateItem)
         return {"updated_count":x.matched_count}
    
     def delete(self, id):
-        laColeccion = self.db[self.collection]
-        cuenta = laColeccion.delete_one({"_id": ObjectId(id)}).deleted_count
+        theCollection = self.db[self.collection]
+        cuenta = theCollection.delete_one({"_id": ObjectId(id)}).deleted_count
         return {"deleted_count": cuenta}
    
     def ObjectToDBRef(self, item: T):
@@ -105,28 +105,28 @@ class InterfaceRepository(Generic[T]):
         return item
     
     def save(self, item: T):
-        laColeccion = self.db[self.collection]
+        theCollection = self.db[self.collection]
         elId = ""
         item = self.transformRefs(item)
         if hasattr(item, "_id") and item._id != "":
             elId = item._id
             _id = ObjectId(elId)
-            laColeccion  = self.db[self.collection]
+            theCollection  = self.db[self.collection]
             delattr(item, "_id")
             item = item.__dict__
             updateItem = {"$set":item}
-            x = laColeccion.update_one({"_id": _id}, updateItem)
+            x = theCollection.update_one({"_id": _id}, updateItem)
         else: 
-            _id = laColeccion.insert_one(item.__dict__)
+            _id = theCollection.insert_one(item.__dict__)
             elId = _id.inserted_id.__str__()
-        x = laColeccion.find_one({"_id":ObjectId(elId)})
+        x = theCollection.find_one({"_id":ObjectId(elId)})
         x["_id"] = x["_id"].__str__()
         return self.findById(elId)
   
     def query(self, theQuery):
-        laColeccion = self.db[self.collection]
+        theCollection = self.db[self.collection]
         data = []
-        for x in laColeccion.find(theQuery):
+        for x in theCollection.find(theQuery):
             x["_id"] = x["_id"].__str__()
             x = self.transformObjectIds(x)
             x = self.getValuesDBRef(x)
@@ -134,9 +134,9 @@ class InterfaceRepository(Generic[T]):
         return data
   
     def queryAggregation(self, theQuery):
-        laColeccion = self.db[self.collection]
+        theCollection = self.db[self.collection]
         data = []
-        for x in laColeccion.aggregate(theQuery):
+        for x in theCollection.aggregate(theQuery):
             x["_id"] = x["_id"].__str__()
             x = self.transformObjectIds(x)
             x = self.getValuesDBRef(x)

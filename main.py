@@ -36,7 +36,7 @@ def getParties():
     return jsonify(json)
 
 @app.route("/Parties", methods=["POST"])
-def crearParty():
+def createParty():
     data = request.get_json()
     json = MyControllerParty.create(data)
     return jsonify(json)
@@ -47,13 +47,13 @@ def getParty(id):
     return jsonify(json)
 
 @app.route("/Parties/<string:id>", methods=["PUT"])
-def modificarParty(id):
+def modifyParty(id):
     data = request.get_json()
     json = MyControllerParty.update(id, data)
     return jsonify(json)
 
 @app.route("/Parties/<string:id>", methods=["DELETE"])
-def eliMynarParty(id):
+def deleteParty(id):
     json = MyControllerParty.delete(id)
     return jsonify(json)
 
@@ -66,7 +66,7 @@ def getAspirants():
     return jsonify(json)
 
 @app.route("/Aspirants", methods =["POST"])
-def crearAspirant():
+def createAspirant():
     data = request.get_json()
     json = MyControllerAspirant.create(data)
     return jsonify(json)
@@ -77,19 +77,19 @@ def getAspirant(id_Aspirant):
     return jsonify(json)
 
 @app.route("/Aspirants/<string:id_Aspirant>", methods = ["PUT"])
-def modificarAspirant(id_Aspirant):
+def modifyAspirant(id_Aspirant):
     data = request.get_json()
     json = MyControllerAspirant.update(id_Aspirant, data)
     return jsonify(json)
 
 @app.route("/Aspirants/<string:id_Aspirant>", methods = ["DELETE"])
-def eliMynarAspirant(id_Aspirant):
+def deleteAspirant(id_Aspirant):
     json = MyControllerAspirant.delete(id_Aspirant)
     return jsonify(json)
 
 @app.route("/Aspirants/<string:id_Aspirant>/Party/<string:id_Party>", methods=["PUT"])
-def asignarPartyAspirant(id_Aspirant, id_Party):
-    json = MyControllerAspirant.asignarAspirant(id_Aspirant, id_Party)
+def assingPartyAspirant(id_Aspirant, id_Party):
+    json = MyControllerAspirant.assingAspirant(id_Aspirant, id_Party)
     return jsonify(json)
 
 #####################################
@@ -102,7 +102,7 @@ def getTables():
     return jsonify(json)
 
 @app.route("/Tables", methods=["POST"])
-def crearTable():
+def createTable():
     data = request.get_json()
     json = MyControllerTable.create(data)
     return jsonify(json)
@@ -113,13 +113,13 @@ def getTable(id):
     return jsonify(json)
 
 @app.route("/Tables/<string:id>", methods=["PUT"])
-def modificarTable(id):
+def modifyTable(id):
     data = request.get_json()
     json = MyControllerTable.update(id, data)
     return jsonify(json)
 
 @app.route("/Tables/<string:id>", methods=["DELETE"])
-def eliMynarTable(id):
+def deleteTable(id):
     json = MyControllerTable.delete(id)
     return jsonify(json)
 
@@ -135,7 +135,7 @@ def getResults():
 
 #Añadir un Result a una Table
 @app.route("/Results/Table/<string:id_Table>/Aspirant/<string:id_Aspirant>", methods =["POST"])
-def crearResult(id_Table, id_Aspirant):
+def createResult(id_Table, id_Aspirant):
     data = request.get_json()
     json = MyControllerResult.create(data, id_Table, id_Aspirant)
     return jsonify(json)
@@ -147,14 +147,14 @@ def getResult(id):
     json = MyControllerResult.show(id)
     return jsonify(json)
 
-#Modificar un Result
+#modify un Result
 @app.route("/Results/<string:id_Result>/Table/<string:id_Table>/Aspirant/<string:id_Aspirant>", methods=["PUT"])
-def modificarResult(id_Result, id_Table, id_Aspirant):
+def modifyResult(id_Result, id_Table, id_Aspirant):
     data={}
     json = MyControllerResult.update(id_Result, data, id_Table, id_Aspirant)
     return jsonify(json)
 
-#EliMynar Result
+#delete Result
 @app.route("/Results/<string:id>", methods=["DELETE"])
 def borrarResult(id):
     json = MyControllerResult.delete(id)
@@ -162,14 +162,14 @@ def borrarResult(id):
 
 #Buscar los Aspirants votados en una Table
 @app.route("/Results/Table/<string:id_Table>", methods=["GET"])
-def inscritosTable(id_Table):
+def inscribedTable(id_Table):
     json = MyControllerResult.getListarAspirantsTable(id_Table)
     return jsonify(json)
 
 #Buscar el Aspirant en las Tables
 @app.route("/Results/Tables/<string:id_Aspirant>", methods=["GET"])
-def inscritoEnTables(id_Aspirant):
-    json = MyControllerResult.getListarTablesDeInscritoAspirant(id_Aspirant)
+def signedEnTables(id_Aspirant):
+    json = MyControllerResult.getListarTablesDesignedAspirant(id_Aspirant)
     return jsonify(json)
 def getMaxDocument():
     json = MyControllerResult.getMayorCedula()

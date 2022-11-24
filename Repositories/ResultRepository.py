@@ -4,12 +4,12 @@ from bson import ObjectId
 
 class ResultRepository(InterfaceRepository[Result]):
     #Da las votaciones por Table
-    def getListadoAspirantsInscritosTable(self, id_Table):
+    def getListAspirantsinscribedTable(self, id_Table):
         theQuery = {"Table.$id": ObjectId(id_Table)}
         return self.query(theQuery)
 
     #Da las votaciones por Aspirant
-    def getListadoTablesAspirantInscrito(self, id_Aspirant):
+    def getListTablesAspirantsigned(self, id_Aspirant):
         theQuery = {"Aspirant.$id": ObjectId(id_Aspirant)}
         return self.query(theQuery)
 
