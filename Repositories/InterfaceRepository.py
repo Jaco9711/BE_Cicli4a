@@ -6,7 +6,7 @@ import json
 import database.database as dbase
 T = TypeVar('T')
 
-class InterfazRepositorio(Generic[T]):
+class InterfaceRepository(Generic[T]):
     
     def __init__(self):
         self.db = dbase.dbConnection()
